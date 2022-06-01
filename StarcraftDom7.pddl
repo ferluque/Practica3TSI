@@ -1,10 +1,10 @@
-(define (domain StarcraftDom4)
+(define (domain StarcraftDom7)
 
     (:requirements
         :equality
         :negative-preconditions
         :typing
-     :disjunctive-preconditions :universal-preconditions)
+     :disjunctive-preconditions :universal-preconditions :fluents)
 
     (:types
     ; Fijos no se mueven
@@ -39,16 +39,19 @@
 
         ; Ejercicio 2
         (ocupada ?u - unidad)
-    (tipo_ed ?e - edificio ?t - tipoedificio)
-        (necesita ?e - tipoedificio ?r - recurso)
+        (tipo_ed ?e - edificio ?t - tipoedificio)
+        
 
         ; Ejercicio 4
         (reclutado_en ?u - tipounidad ?ed - tipoedificio)
-        (ud_necesita_rec ?u - tipounidad ?r - recurso)
+        
 )
 
     (:functions
-
+        (cantidad ?r - recurso)
+        (asignados ?r - recurso ?lrecurso - loc)
+        (necesita ?e - tipoedificio ?r - recurso)
+        (ud_necesita_rec ?u - tipounidad ?r - recurso)
     )
 
     (:action Navegar
@@ -62,23 +65,6 @@
                 (not (ud_en ?u ?orig)))
     )
     
-    (:action Asignar
-        :parameters (?u - unidad ?lrecurso - loc ?recurso - recurso)
-        :precondition(and
-                        (tipo ?u VCE)
-                        (ud_en ?u ?lrecurso)
-                        (en ?recurso ?lrecurso)
-                        (not (extraido ?recurso))
-                        (or (en Minerales ?lrecurso)
-                        (and (
-                            imply (en GasVespeno ?lrecurso)(
-                                exists (?x - edificio)(and (construido ?x ?lrecurso) (tipo_ed ?x Extractor)))
-                        ))
-                        )
-                    )
-        :effect (and (extrayendo ?u ?recurso)(extraido ?recurso)(ocupada ?u))
-    )
-
     (:action Construir
         :parameters (?u - unidad ?e - edificio ?l - loc)
         :precondition (and 
@@ -89,9 +75,7 @@
                         (forall (?ed - edificio)(not(construido ?ed ?l)))
                         (exists (?tipo - tipoedificio)(
                             and (tipo_ed ?e ?tipo)(forall (?rec - recurso)(
-                                imply (necesita ?tipo ?rec)(;extrayendo ?rec
-                                    extraido ?rec
-                                )
+                                    >= (cantidad ?rec) (necesita ?tipo ?rec)                            
                             ))
                         ))
                         )
@@ -105,18 +89,12 @@
     ; EXTRAIDO MINERALES
     (:action Reclutar
         :parameters (?e - edificio ?u - unidad ?l - loc)
-        :precondition (and 
-            ; (exists (?tipoud - tipounidad ?rec - recurso)(and
-            ;     (tipo ?u ?tipoud)
-            ;     (ud_necesita_rec ?tipoud ?rec)
-            ;     (extraido ?rec)
-            ; ))
-            ; Está mal porque falla cuando necesitan más de un recurso
+        :precondition (and
             (exists (?tipoud - tipounidad)(
-                forall (?rec - recurso)(imply (ud_necesita_rec ?tipoud ?rec)
-                    (extraido ?rec)
+                and (tipo ?u ?tipoud)(forall (?rec - recurso)(
+                    >= (cantidad ?rec)(ud_necesita_rec ?tipoud ?rec)))
                 )
-            ))
+            )
             (exists (?tipoud - tipounidad ?tipoed - tipoedificio)(and
                 (tipo ?u ?tipoud)
                 (reclutado_en ?tipoud ?tipoed)
@@ -124,10 +102,32 @@
                 (construido ?e ?l)
             ))
         )
-        :effect (and (ud_en ?u ?l))
+        :effect (and (ud_en ?u ?l));(-(cantidad ?rec)(ud_necesita_rec ?tipoud ?rec)));(exists (?tipoud - tipounidad)(forall (?r - recurso))(- (cantidad ?r)(ud_necesita_rec ?tipoud ?r))))
     )
     
+    ; Ejercicio 7
+    (:action Asignar
+        :parameters (?u - unidad ?lrecurso - loc ?recurso - recurso)
+        :precondition(and
+                        (tipo ?u VCE)
+                        (ud_en ?u ?lrecurso)
+                        (en ?recurso ?lrecurso)
+                        (or (en Minerales ?lrecurso)
+                        (and (
+                            imply (en GasVespeno ?lrecurso)(
+                                exists (?x - edificio)(and (construido ?x ?lrecurso) (tipo_ed ?x Extractor)))
+                        ))
+                        )
+                    )
+        :effect (and (extrayendo ?u ?recurso)(extraido ?recurso)(ocupada ?u)(increase (asignados ?recurso ?lrecurso) 1))
+    )
 
-    
+    (:action Recolectar
+        :parameters (?r - recurso ?l - loc)
+        :precondition (and 
+            (exists(?u - unidad)(extrayendo ?u ?r))
+        )
+        :effect (and (increase (cantidad ?r) (* 10 (asignados ?r ?l))))
+    )    
 )
 

@@ -1,4 +1,4 @@
-(define (domain StarcraftDom4)
+(define (domain StarcraftDom5)
 
     (:requirements
         :equality
@@ -10,7 +10,7 @@
     ; Fijos no se mueven
     ; Movibles (unidad) sí
     ; Recurso no tiene objetos concretos, solo los tipos genericos
-        fijos loc movibles - object
+        fijos loc movibles investigacion - object
         recurso edificio - fijos
         unidad - movibles
         tipoedificio tipounidad - object
@@ -18,8 +18,9 @@
 
     (:constants
         VCE Marine Soldado - tipounidad
-        CentroDeMando Barracones Extractor - tipoedificio
+        CentroDeMando Barracones Extractor BahiaIngenieria - tipoedificio
         Minerales GasVespeno - recurso
+        InvSoldadoUniversal - investigacion
     )
 
     (:predicates
@@ -45,6 +46,10 @@
         ; Ejercicio 4
         (reclutado_en ?u - tipounidad ?ed - tipoedificio)
         (ud_necesita_rec ?u - tipounidad ?r - recurso)
+
+        ;Ejercicio 5
+        (inv_necesita ?i - investigacion ?r - recurso)
+        (investigada ?i - investigacion)
 )
 
     (:functions
@@ -98,20 +103,10 @@
         :effect (and (construido ?e ?l))
     )
 
-    ; RECLUTAR CENTRODEMANDO1 VCE2 LOC11
-    ; EXISTS 
-    ; TIPO VCE2 VCE
-    ; UD_NECESITA_REC VCE MINERALES
-    ; EXTRAIDO MINERALES
     (:action Reclutar
         :parameters (?e - edificio ?u - unidad ?l - loc)
         :precondition (and 
-            ; (exists (?tipoud - tipounidad ?rec - recurso)(and
-            ;     (tipo ?u ?tipoud)
-            ;     (ud_necesita_rec ?tipoud ?rec)
-            ;     (extraido ?rec)
-            ; ))
-            ; Está mal porque falla cuando necesitan más de un recurso
+            (not (exists (?loc - loc)(ud_en ?u ?loc)))
             (exists (?tipoud - tipounidad)(
                 forall (?rec - recurso)(imply (ud_necesita_rec ?tipoud ?rec)
                     (extraido ?rec)
@@ -123,8 +118,21 @@
                 (tipo_ed ?e ?tipoed)
                 (construido ?e ?l)
             ))
+            (imply (tipo ?u Soldado)(investigada InvSoldadoUniversal))
         )
         :effect (and (ud_en ?u ?l))
+    )
+    
+    (:action Investigar
+        :parameters (?e - edificio ?i - investigacion)
+        :precondition (and 
+            (tipo_ed ?e BahiaIngenieria)
+            (exists (?l - loc)(construido ?e ?l))
+            (forall (?r - recurso)(imply (inv_necesita ?i ?r)(
+                extraido ?r
+            )))
+        )
+        :effect (and (investigada ?i))
     )
     
 
