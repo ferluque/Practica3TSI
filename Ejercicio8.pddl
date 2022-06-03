@@ -1,5 +1,5 @@
-(define (problem Ejercicio7)
-    (:domain StarcraftDom7)
+(define (problem Ejercicio8)
+    (:domain StarcraftDom8)
     (:objects 
         LOC11,LOC12,LOC13,LOC14,LOC21,LOC22,LOC23,LOC24,LOC31,LOC32,LOC33,LOC34,LOC44 - loc
         VCE1, VCE2, VCE3 - unidad
@@ -8,9 +8,19 @@
         Marine1 Marine2 Soldado1 - unidad
     )
     (:init
-        ; Ejercicio 7
-        (= (long_plan) 0)
+        ; Ejercicio 8
+        (= (tiempo) 0)
+        (= (tiempo_construir Barracones) 50)
+        (= (tiempo_construir Extractor) 20)
+        (= (tiempo_reclutar VCE) 10)
+        (= (tiempo_reclutar Marine) 20)
+        (= (tiempo_reclutar Soldado) 30)
 
+        (= (tiempo_navegar VCE) 20)
+        (= (tiempo_navegar Marine) 4)
+        (= (tiempo_navegar Soldado) 2)
+
+        ; Ejercicio 7
         (= (cantidad Minerales) 0)
         (= (cantidad GasVespeno) 0)
 
@@ -112,8 +122,10 @@
     )
     
     (:goal 
-        (and (construido Barracones1 LOC32)(ud_en Soldado1 LOC12)(ud_en Marine1 LOC31)(ud_en Marine2 LOC24)(<=(long_plan)56))
+        (and (construido Barracones1 LOC32)(ud_en Soldado1 LOC12)(ud_en Marine1 LOC31)(ud_en Marine2 LOC24))
     )
+
+    (:metric minimize (tiempo))
 )
 
 ;(ud_en Marine1 LOC31)(ud_en Marine2 LOC24)(ud_en Soldado1 LOC12)

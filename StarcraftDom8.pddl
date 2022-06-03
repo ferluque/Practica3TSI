@@ -1,4 +1,4 @@
-(define (domain StarcraftDom7)
+(define (domain StarcraftDom8)
 
     (:requirements
         :equality
@@ -61,7 +61,12 @@
         (ed_necesita_tantos ?e - tipoedificio ?r - recurso)
         ; Cantidad de recurso que ncesita una unidad para reclutarse
         (ud_necesita_tantos ?u - tipounidad ?r - recurso)
-        (long_plan)
+
+        ;; Ejercicio 8
+        (tiempo)
+        (tiempo_navegar ?u - tipounidad)
+        (tiempo_construir ?e - tipoedificio)
+        (tiempo_reclutar ?u - tipounidad)
     )
 
     (:action Navegar
@@ -77,7 +82,11 @@
         :effect (and 
                 (ud_en ?u ?dest)
                 (not (ud_en ?u ?orig))
-                (increase (long_plan)1))
+                (forall (?tu - tipounidad)(when (tipo ?u ?tu)(increase (tiempo)(tiempo_navegar ?tu))))
+                ; (when (tipo ?u VCE)(increase (tiempo)20))
+                ; (when (tipo ?u Marine)(increase (tiempo)4))
+                ; (when (tipo ?u Soldado)(increase (tiempo)2))
+                )
     )
     
     (:action Construir
@@ -109,8 +118,10 @@
                             decrease (cantidad ?r)(ed_necesita_tantos ?tipoed ?r)
                     )
                 ))
-                (increase (long_plan)1)
                 (ya_construido ?e)  
+                (forall (?te - tipoedificio)(when (tipo_ed ?e ?te)(increase (tiempo)(tiempo_construir ?te))))
+                ; (when (tipo_ed ?e Barracones)(increase (tiempo)50))
+                ; (when (tipo_ed ?e Extractor)(increase (tiempo)20))
         )
     )
 
@@ -144,8 +155,8 @@
                     decrease (cantidad ?r)(ud_necesita_tantos ?tipoud ?r)
             )
         ))
-        (increase (long_plan)1)
         (ya_reclutado ?u)
+        (forall (?tu - tipounidad)(when (tipo ?u ?tu)(increase (tiempo)(tiempo_reclutar ?tu))))
         )
     )
     
@@ -169,7 +180,7 @@
                         ))
                         )
                     )                                                       ; Se suma uno a los asignados
-        :effect (and (extrayendo ?u ?recurso)(extraido ?recurso)(ocupada ?u)(increase (asignados ?recurso ?lrecurso) 1)(increase (long_plan)1))
+        :effect (and (extrayendo ?u ?recurso)(extraido ?recurso)(ocupada ?u)(increase (asignados ?recurso ?lrecurso) 1))
     )
 
     (:action Recolectar
@@ -192,7 +203,7 @@
             )
         )
         ; Se suman 10 por cada uno asignado
-        :effect (and (increase (cantidad ?r)(* 10 (asignados ?r ?l)))(increase (long_plan)1))
+        :effect (and (increase (cantidad ?r)(* 10 (asignados ?r ?l)))(increase (tiempo) 5))
     )    
 )
 
