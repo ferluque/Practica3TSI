@@ -46,7 +46,6 @@
         ; Ejercicio 4
         (reclutado_en ?u - tipounidad ?ed - tipoedificio)
         
-        ;
         (necesita ?e - tipoedificio ?r - recurso)
         (ud_necesita_rec ?u - tipounidad ?r - recurso)
         (ya_reclutado ?u - unidad)
@@ -63,9 +62,13 @@
         (ud_necesita_tantos ?u - tipounidad ?r - recurso)
 
         ;; Ejercicio 8
+        ; El tiempo total del plan
         (tiempo)
+        ; El tiempo que tarda en navegar una casilla cada unidad
         (tiempo_navegar ?u - tipounidad)
+        ; El tiempo que se tarda en construir cada edificio
         (tiempo_construir ?e - tipoedificio)
+        ; El tiempo que se tarda en reclutar una unidad
         (tiempo_reclutar ?u - tipounidad)
     )
 
@@ -119,9 +122,8 @@
                     )
                 ))
                 (ya_construido ?e)  
+                ; Incrementa el tiempo que le corresponda a su tipo de edificio
                 (forall (?te - tipoedificio)(when (tipo_ed ?e ?te)(increase (tiempo)(tiempo_construir ?te))))
-                ; (when (tipo_ed ?e Barracones)(increase (tiempo)50))
-                ; (when (tipo_ed ?e Extractor)(increase (tiempo)20))
         )
     )
 
@@ -156,6 +158,7 @@
             )
         ))
         (ya_reclutado ?u)
+        ; Incrementa el tiempo que le  corresponda a su tipo de unidad
         (forall (?tu - tipounidad)(when (tipo ?u ?tu)(increase (tiempo)(tiempo_reclutar ?tu))))
         )
     )
@@ -179,7 +182,8 @@
                                 exists (?x - edificio)(and (construido ?x ?lrecurso) (tipo_ed ?x Extractor)))
                         ))
                         )
-                    )                                                       ; Se suma uno a los asignados
+                    )                                                       
+                ; Asignar no requiere de tiempo
         :effect (and (extrayendo ?u ?recurso)(extraido ?recurso)(ocupada ?u)(increase (asignados ?recurso ?lrecurso) 1))
     )
 
@@ -203,6 +207,7 @@
             )
         )
         ; Se suman 10 por cada uno asignado
+        ; Recolectar requiere 5 de tiempo constante
         :effect (and (increase (cantidad ?r)(* 10 (asignados ?r ?l)))(increase (tiempo) 5))
     )    
 )

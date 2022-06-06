@@ -7,29 +7,33 @@
         Barracones1 CentroDeMando1 - edificio
     )
     (:init
-        (tipo_ed CentroDeMando1 CentroDeMando)
-        (construido CentroDeMando1 LOC11)
-        
+        ; Extractor y barracones sin construir
         (tipo_ed Extractor1 Extractor)
         (tipo_ed Barracones1 Barracones)
-        
+
+        ; Los 3 VCEs en loc11        
         (tipo VCE1 VCE)
         (tipo VCE2 VCE)
         (tipo VCE3 VCE)
-
         (ud_en VCE1 LOC11)
         (ud_en VCE2 LOC11)
         (ud_en VCE3 LOC11)
+        
+        ; Los recursos que necesita cada edificio
+        (necesita Extractor Minerales)
+        (necesita Barracones Minerales)
+        (necesita Barracones GasVespeno)
+        
 
+        ;Mapa
         (en Minerales LOC22)
         (en Minerales LOC32)
 
         (en GasVespeno LOC44)
         
-        (necesita Extractor Minerales)
-        (necesita Barracones Minerales)
-        (necesita Barracones GasVespeno)
-        
+        (tipo_ed CentroDeMando1 CentroDeMando)
+        (construido CentroDeMando1 LOC11)
+
         (conecta LOC11 LOC12)
         (conecta LOC12 LOC11)
         

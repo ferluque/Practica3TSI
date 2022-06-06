@@ -118,6 +118,7 @@
                 (tipo_ed ?e ?tipoed)
                 (construido ?e ?l)
             ))
+            ; Si es un soldado necesita de la investigación
             (imply (tipo ?u Soldado)(investigada InvSoldadoUniversal))
         )
         :effect (and (ud_en ?u ?l))
@@ -126,8 +127,11 @@
     (:action Investigar
         :parameters (?e - edificio ?i - investigacion)
         :precondition (and 
+            ; Debe investigarse en la Bahía de INgeniería
             (tipo_ed ?e BahiaIngenieria)
+            ; Que esta esté construida
             (exists (?l - loc)(construido ?e ?l))
+            ; Y que se estén extrayendo los recursos que necesite
             (forall (?r - recurso)(imply (inv_necesita ?i ?r)(
                 extraido ?r
             )))

@@ -6,15 +6,19 @@
         VCE1 - unidad
     )
     (:init
+        ; Un centro de mando en LOC11
         (en CentroDeMando1 LOC11)
         (tipo_ed CentroDeMando1 CentroDeMando)
 
+        ; Un VCE en LOC11
         (tipo VCE1 VCE)
         (ud_en VCE1 LOC11)
         
+        ; Dos nodos de minerales
         (en Minerales LOC22)
         (en Minerales LOC32)
         
+        ; El mapa
         (conecta LOC11 LOC12)
         (conecta LOC12 LOC11)
         
@@ -61,6 +65,7 @@
     
     (:goal 
         (and
+            ; Que extraiga los minerales de loc22 o loc32
             (extrayendo VCE1 Minerales))
     )
 )

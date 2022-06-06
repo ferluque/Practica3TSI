@@ -9,19 +9,21 @@
     )
     (:init
         ; Ejercicio 7
+        ; Se inicializa la longitud
         (= (long_plan) 0)
 
+        ; Se inicializan los tanques vacíos
         (= (cantidad Minerales) 0)
         (= (cantidad GasVespeno) 0)
 
-        (en Minerales LOC22)
-        (en Minerales LOC32)
+        ; No hay VCEs asignados
         (= (asignados Minerales LOC22) 0)
         (= (asignados Minerales LOC32) 0)
 
         (en GasVespeno LOC44)
         (= (asignados GasVespeno LOC44) 0)
         
+        ; Las cantidades requeridas para reclutar y construir
         (necesita Barracones Minerales)
         (necesita Barracones GasVespeno)
         (= (ed_necesita_tantos Barracones Minerales) 30)
@@ -45,6 +47,9 @@
         (= (ud_necesita_tantos Soldado GasVespeno) 30)
         ;;
 
+        ; Mapa
+        (en Minerales LOC22)
+        (en Minerales LOC32)
         (tipo Marine1 Marine)
         (tipo Marine2 Marine)
         (tipo Soldado1 Soldado)

@@ -7,23 +7,30 @@
         CentroDeMando1 - edificio
     )
     (:init
+        ; El extractor aunque no esté construido aun hay que declararlo
         (tipo_ed Extractor1 Extractor)
+
+        ; El centro de mando ya construido
         (tipo_ed CentroDeMando1 CentroDeMando)
         (construido CentroDeMando1 LOC11)
 
+        ; Los dos vces en loc11
         (tipo VCE1 VCE)
         (tipo VCE2 VCE)
-
         (ud_en VCE1 LOC11)
         (ud_en VCE2 LOC11)
 
+        ; DOs nodos de minerales
         (en Minerales LOC22)
         (en Minerales LOC32)
 
+        ; Uno de gas vespeno
         (en GasVespeno LOC44)
         
+        ; El Extractor1 necesita minerales
         (necesita Extractor1 Minerales)
         
+        ; Mapa
         (conecta LOC11 LOC12)
         (conecta LOC12 LOC11)
         

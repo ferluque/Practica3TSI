@@ -38,7 +38,7 @@
 
         ; Ejercicio 2
         (ocupada ?u - unidad)
-    (tipo_ed ?e - edificio ?t - tipoedificio)
+        (tipo_ed ?e - edificio ?t - tipoedificio)
         (necesita ?e - tipoedificio ?r - recurso)
 )
 
@@ -80,10 +80,14 @@
                         (not (ocupada ?u))
                         (not (exists(?lo - loc)(construido ?e ?lo)))
                         (imply (tipo_ed ?e Extractor)(en GasVespeno ?l))
+                        ; No puede haber otro edificio construido en este nodo
                         (forall (?ed - edificio)(not(construido ?ed ?l)))
+                        ; Se generaliza la necesidad de estar extrayendo un recurso
                         (exists (?tipo - tipoedificio)(
                             and (tipo_ed ?e ?tipo)(forall (?rec - recurso)(
-                                imply (necesita ?tipo ?rec)(;extrayendo ?rec
+                                ; Para todos los recursos que necesite
+                                imply (necesita ?tipo ?rec)(
+                                    ; Debe haber una unidad extrayéndolos
                                     exists (?ud - unidad)(extrayendo ?ud ?rec)
                                 )
                             ))

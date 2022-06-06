@@ -8,14 +8,12 @@
         Marine1 Marine2 Soldado1 - unidad
     )
     (:init
-        ; Ejercicio 5
         (tipo_ed BahiaIngenieria1 BahiaIngenieria)
         (necesita BahiaIngenieria Minerales)
         (necesita BahiaIngenieria GasVespeno)
 
         (inv_necesita InvSoldadoUniversal Minerales)
         (inv_necesita InvSoldadoUniversal GasVespeno)
-        ;
 
         (tipo Marine1 Marine)
         (tipo Marine2 Marine)
@@ -102,8 +100,8 @@
     (:goal 
         (and (construido Barracones1 LOC14)(construido BahiaIngenieria1 LOC12)
         (ud_en Marine1 LOC14)(ud_en Marine2 LOC14)(ud_en Soldado1 LOC14)(<= (long_plan) 24)
+                                                                            ; Se limita la longitud del plan al del último encontrado, hasta que haya una longitud
+                                                                            ; Para la que no encuentre, en este caso si ponemos < 24 ya no encuentra.
         )
     )
 )
-
-;(ud_en Marine1 LOC31)(ud_en Marine2 LOC24)(ud_en Soldado1 LOC12)

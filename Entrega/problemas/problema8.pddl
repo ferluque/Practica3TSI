@@ -16,9 +16,10 @@
         (= (tiempo_reclutar Marine) 20)
         (= (tiempo_reclutar Soldado) 30)
 
-        (= (tiempo_navegar VCE) 20)
-        (= (tiempo_navegar Marine) 4)
-        (= (tiempo_navegar Soldado) 2)
+        ; Calculado como distancia_entre_nodos/velocidad unidad
+        (= (tiempo_navegar VCE) 20) ; 20/1 = 20
+        (= (tiempo_navegar Marine) 4) ; 20/5 = 4
+        (= (tiempo_navegar Soldado) 2) ; 20/10 = 2
 
         ; Ejercicio 7
         (= (cantidad Minerales) 0)

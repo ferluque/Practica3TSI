@@ -46,9 +46,10 @@
         ; Ejercicio 4
         (reclutado_en ?u - tipounidad ?ed - tipoedificio)
         
-        ;
         (necesita ?e - tipoedificio ?r - recurso)
         (ud_necesita_rec ?u - tipounidad ?r - recurso)
+
+        ; Este es un predicado genérico que sustituye al (exists (?l - loc)(ud_en ?u ?l)) para acelerar la búsqueda
         (ya_reclutado ?u - unidad)
 )
 
@@ -180,8 +181,12 @@
             ; Es necesario que esté en ?l el recurso
             (en ?r ?l)
             ; Si al recolectar supera 60 no recolecta
+            ; Si (cantidad ?r)+10*(asignados ?r ?l) > 60 no recolecta
             (<= (+ (cantidad ?r)(* 10 (asignados ?r ?l))) 60)
 
+            ; Realmente la condición del extractor es redundante ya que previamente se establece que debe estar siendo extraido
+            ; y para que esté siendo extraido ya tenía que haber un extractor. Sin embargo, el añadir estas precondiciones
+            ; acelera la búsqueda
             (or (en Minerales ?l)
                         (and (
                             ; Si el recurso es GV

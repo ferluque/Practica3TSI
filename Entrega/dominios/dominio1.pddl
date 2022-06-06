@@ -40,6 +40,7 @@
     (:action Navegar
         :parameters (?u - unidad ?orig ?dest - loc)
         :precondition (and 
+                        ; Para que una unidad se mueva debe estar en una posición y moverse a una colindante
                         (ud_en ?u ?orig)
                         (conecta ?orig ?dest))
         :effect (and 
@@ -47,9 +48,11 @@
                 (not (ud_en ?u ?orig)))
     )
     
+    ; No se permite desasignar un VCE una vez que ya se haya asignado
     (:action Asignar
         :parameters (?u - unidad ?lrecurso - loc ?recurso - recurso)
         :precondition(and
+                        ; Para asignarla debe estar en el nodo indicado y que en ese nodo haya ese recurso
                         (tipo ?u VCE)
                         (ud_en ?u ?lrecurso)
                         (en ?recurso ?lrecurso))

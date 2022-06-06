@@ -34,7 +34,6 @@
         (en ?o - fijos ?x - loc)
         ;; Quinto punto
         (extrayendo ?u - unidad ?r - recurso)
-        (extraido ?r - recurso)
         (tipo ?u - unidad ?t - tipounidad)
 
         ; Ejercicio 2
@@ -43,7 +42,12 @@
         (necesita ?e - tipoedificio ?r - recurso)
 
         ; Ejercicio 4
+        ; Se añade en este ejercicio el predicado extraido que indica si se esta extrayendo un recurso por alguna unidad (la que sea)
+        ; esto optimiza el checkeo de precondiciones
+        (extraido ?r - recurso)
+        ; Se indica en que tipo de edificio se recluta un tipo de unidad
         (reclutado_en ?u - tipounidad ?ed - tipoedificio)
+        ; Se indica que recurso necesita una unidad
         (ud_necesita_rec ?u - tipounidad ?r - recurso)
 )
 
@@ -89,7 +93,9 @@
                         (forall (?ed - edificio)(not(construido ?ed ?l)))
                         (exists (?tipo - tipoedificio)(
                             and (tipo_ed ?e ?tipo)(forall (?rec - recurso)(
-                                imply (necesita ?tipo ?rec)(;extrayendo ?rec
+                                imply (necesita ?tipo ?rec)(
+                                    ; Aquí ahora no se tiene que buscar la unidad, se recurre al 
+                                    ; predicado genérico
                                     extraido ?rec
                                 )
                             ))
@@ -98,26 +104,17 @@
         :effect (and (construido ?e ?l))
     )
 
-    ; RECLUTAR CENTRODEMANDO1 VCE2 LOC11
-    ; EXISTS 
-    ; TIPO VCE2 VCE
-    ; UD_NECESITA_REC VCE MINERALES
-    ; EXTRAIDO MINERALES
     (:action Reclutar
         :parameters (?e - edificio ?u - unidad ?l - loc)
         :precondition (and 
-            ; (exists (?tipoud - tipounidad ?rec - recurso)(and
-            ;     (tipo ?u ?tipoud)
-            ;     (ud_necesita_rec ?tipoud ?rec)
-            ;     (extraido ?rec)
-            ; ))
-            ; Está mal porque falla cuando necesitan más de un recurso
             (exists (?tipoud - tipounidad)(
                 forall (?rec - recurso)(imply (ud_necesita_rec ?tipoud ?rec)
+                    ; Ocurre lo mismo que en construir
                     (extraido ?rec)
                 )
             ))
             (exists (?tipoud - tipounidad ?tipoed - tipoedificio)(and
+                ; Debe reclutarse la unidad en el edificio que se indique y además que este esté construido
                 (tipo ?u ?tipoud)
                 (reclutado_en ?tipoud ?tipoed)
                 (tipo_ed ?e ?tipoed)

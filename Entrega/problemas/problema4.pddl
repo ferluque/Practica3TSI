@@ -8,42 +8,45 @@
         Marine1 Marine2 Soldado1 - unidad
     )
     (:init
+        ; Los tipos de tropas sin reclutar
         (tipo Marine1 Marine)
         (tipo Marine2 Marine)
         (tipo Soldado1 Soldado)
 
+        ; Los edificios en los que se recluta cada tropa
         (reclutado_en Marine Barracones)
         (reclutado_en Soldado Barracones)
+        (reclutado_en VCE CentroDeMando)
 
+        ; Los recursos que necesita cada tropa
         (ud_necesita_rec Marine Minerales)
         (ud_necesita_rec Soldado Minerales)
         (ud_necesita_rec Soldado GasVespeno)
         (ud_necesita_rec VCE Minerales)
 
-        (reclutado_en VCE CentroDeMando)
-
-
-        (tipo_ed CentroDeMando1 CentroDeMando)
-        (construido CentroDeMando1 LOC11)
-        
-        (tipo_ed Extractor1 Extractor)
-        (tipo_ed Barracones1 Barracones)
-        
+        ; Solo está al inicio reclutado el vce1
         (tipo VCE1 VCE)
         (tipo VCE2 VCE)
         (tipo VCE3 VCE)
 
         (ud_en VCE1 LOC11)
 
-        (en Minerales LOC22)
-        (en Minerales LOC32)
-
-        (en GasVespeno LOC44)
-        
+        ; Los recursos que necesita cada edificio
         (necesita Extractor Minerales)
         (necesita Barracones Minerales)
         (necesita Barracones GasVespeno)
         
+        ; Mapa inicial
+        (en Minerales LOC22)
+        (en Minerales LOC32)
+        (en GasVespeno LOC44)
+        
+        (tipo_ed CentroDeMando1 CentroDeMando)
+        (construido CentroDeMando1 LOC11)
+        
+        (tipo_ed Extractor1 Extractor)
+        (tipo_ed Barracones1 Barracones)
+
         (conecta LOC11 LOC12)
         (conecta LOC12 LOC11)
         

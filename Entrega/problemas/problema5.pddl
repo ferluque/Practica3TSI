@@ -9,14 +9,17 @@
     )
     (:init
         ; Ejercicio 5
+        ; El nuevo edificio y los recursos que necesita
         (tipo_ed BahiaIngenieria1 BahiaIngenieria)
         (necesita BahiaIngenieria Minerales)
         (necesita BahiaIngenieria GasVespeno)
 
+        ; Los recursos que necesita la investigación
         (inv_necesita InvSoldadoUniversal Minerales)
         (inv_necesita InvSoldadoUniversal GasVespeno)
         ;
 
+        ; Ejercicio 4
         (tipo Marine1 Marine)
         (tipo Marine2 Marine)
         (tipo Soldado1 Soldado)

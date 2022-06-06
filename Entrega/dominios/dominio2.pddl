@@ -66,7 +66,7 @@
                         ; O son minerales
                         (or 
                         (en Minerales ?lrecurso)
-                        ; O gas con extractor
+                        ; O gas y se ha construido un extractor previamente
                         (and (en GasVespeno ?lrecurso)(exists (?x - edificio)(and (construido ?x ?lrecurso) (tipo_ed ?x Extractor)))))
                         )
         :effect (and (extrayendo ?u ?recurso)(ocupada ?u))
@@ -75,10 +75,15 @@
     (:action Construir
         :parameters (?u - unidad ?e - edificio ?l - loc ?r - recurso)
         :precondition (and 
+                        ; La unidad debe estar en la zona
                         (ud_en ?u ?l)
+                        ; El recurso que se necesite debe estar siendo extraído
                         (exists(?x - unidad)(extrayendo ?x ?r))
+                        ; La unidad no puede estar ya asignada
                         (not (ocupada ?u))
+                        ; Debe necesitar el recurso que se le indica
                         (necesita ?e ?r)
+                        ; Si es un extractor, solo se puede construir sobre un nodo de GV
                         (imply (tipo_ed ?e Extractor)(and (en GasVespeno ?l)))
                         )
         :effect (and (construido ?e ?l))

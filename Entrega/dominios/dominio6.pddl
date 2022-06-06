@@ -54,6 +54,8 @@
 )
 
     (:functions
+        ; Ejercicio 6
+        ; Todas las acciones incrementan la longitud en 1
         (long_plan)
     )
 
