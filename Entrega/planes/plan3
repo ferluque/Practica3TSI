@@ -1,0 +1,56 @@
+
+ff: parsing domain file
+domain 'STARCRAFTDOM3' defined
+ ... done.
+ff: parsing problem file
+problem 'EJERCICIO3' defined
+ ... done.
+
+
+no metric specified. plan length assumed.
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is  best-first on 1*g(s) + 1*h(s) where
+    metric is  plan length
+
+advancing to distance:   13
+                          9
+                          8
+                          7
+                          6
+                          5
+                          4
+                          3
+                          2
+                          1
+                          0
+
+ff: found legal plan as follows
+
+step    0: NAVEGAR VCE3 LOC11 LOC12
+        1: NAVEGAR VCE3 LOC12 LOC22
+        2: NAVEGAR VCE2 LOC11 LOC12
+        3: NAVEGAR VCE2 LOC12 LOC22
+        4: NAVEGAR VCE3 LOC22 LOC23
+        5: NAVEGAR VCE1 LOC11 LOC12
+        6: NAVEGAR VCE1 LOC12 LOC22
+        7: NAVEGAR VCE2 LOC22 LOC23
+        8: NAVEGAR VCE3 LOC23 LOC33
+        9: NAVEGAR VCE3 LOC33 LOC34
+       10: NAVEGAR VCE3 LOC34 LOC44
+       11: NAVEGAR VCE2 LOC23 LOC33
+       12: ASIGNAR VCE1 LOC22 MINERALES
+       13: CONSTRUIR VCE3 EXTRACTOR1 LOC44
+       14: ASIGNAR VCE3 LOC44 GASVESPENO
+       15: CONSTRUIR VCE2 BARRACONES1 LOC33
+     
+
+time spent:    0.00 seconds instantiating 84 easy, 342 hard action templates
+               0.00 seconds reachability analysis, yielding 103 facts and 426 actions
+               0.00 seconds creating final representation with 77 relevant facts, 0 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.02 seconds searching, evaluating 945 states, to a max depth of 0
+               0.02 seconds total time
+

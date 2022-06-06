@@ -1,0 +1,76 @@
+
+ff: parsing domain file
+domain 'STARCRAFTDOM4' defined
+ ... done.
+ff: parsing problem file
+problem 'EJERCICIO4' defined
+ ... done.
+
+
+no metric specified. plan length assumed.
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is  best-first on 1*g(s) + 1*h(s) where
+    metric is  plan length
+
+advancing to distance:   22
+                         20
+                         18
+                         15
+                         14
+                         13
+                         12
+                         11
+                         10
+                          9
+                          8
+                          7
+                          6
+                          5
+                          4
+                          3
+                          2
+                          1
+                          0
+
+ff: found legal plan as follows
+
+step    0: NAVEGAR VCE1 LOC11 LOC12
+        1: NAVEGAR VCE1 LOC12 LOC22
+        2: ASIGNAR VCE1 LOC22 MINERALES
+        3: RECLUTAR CENTRODEMANDO1 VCE3 LOC11
+        4: NAVEGAR VCE3 LOC11 LOC12
+        5: NAVEGAR VCE3 LOC12 LOC22
+        6: RECLUTAR CENTRODEMANDO1 VCE2 LOC11
+        7: NAVEGAR VCE2 LOC11 LOC12
+        8: NAVEGAR VCE3 LOC22 LOC23
+        9: NAVEGAR VCE3 LOC23 LOC33
+       10: NAVEGAR VCE2 LOC12 LOC22
+       11: NAVEGAR VCE3 LOC33 LOC34
+       12: NAVEGAR VCE3 LOC34 LOC44
+       13: CONSTRUIR VCE3 EXTRACTOR1 LOC44
+       14: ASIGNAR VCE3 LOC44 GASVESPENO
+       15: NAVEGAR VCE2 LOC22 LOC32
+       16: CONSTRUIR VCE2 BARRACONES1 LOC32
+       17: RECLUTAR BARRACONES1 MARINE1 LOC32
+       18: NAVEGAR MARINE1 LOC32 LOC31
+       19: RECLUTAR BARRACONES1 MARINE2 LOC32
+       20: NAVEGAR MARINE2 LOC32 LOC22
+       21: NAVEGAR MARINE2 LOC22 LOC23
+       22: NAVEGAR MARINE2 LOC23 LOC33
+       23: NAVEGAR MARINE2 LOC33 LOC34
+       24: NAVEGAR MARINE2 LOC34 LOC24
+       25: RECLUTAR BARRACONES1 SOLDADO1 LOC32
+       26: NAVEGAR SOLDADO1 LOC32 LOC22
+       27: NAVEGAR SOLDADO1 LOC22 LOC12
+     
+
+time spent:    0.00 seconds instantiating 168 easy, 243 hard action templates
+               0.00 seconds reachability analysis, yielding 149 facts and 333 actions
+               0.00 seconds creating final representation with 120 relevant facts, 0 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.03 seconds searching, evaluating 2482 states, to a max depth of 0
+               0.03 seconds total time
+
